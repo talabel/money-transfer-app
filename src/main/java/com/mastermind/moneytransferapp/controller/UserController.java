@@ -1,14 +1,21 @@
 package com.mastermind.moneytransferapp.controller;
 
-import com.mastermind.moneytransferapp.model.*;
-import com.mastermind.moneytransferapp.repository.*;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.mastermind.moneytransferapp.model.Transaction;
+import com.mastermind.moneytransferapp.model.User;
+import com.mastermind.moneytransferapp.repository.TransactionRepository;
+import com.mastermind.moneytransferapp.repository.UserRepository;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+@Api
 @RestController
 @RequestMapping(path = "/api/users")
 public class UserController {
@@ -18,6 +25,14 @@ public class UserController {
 
     @Autowired
     public TransactionRepository transactionRepository;
+
+    @ExceptionHandler({NoSuchElementException.class, JsonMappingException.class})
+    public ModelAndView handleException(Exception exception) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("custom-error");
+        modelAndView.addObject("message", exception.getMessage());
+        return modelAndView;
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> findOne(@PathVariable Long id) {
