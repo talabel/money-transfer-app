@@ -1,7 +1,6 @@
 package com.mastermind.moneytransferapp.controller;
 
 import com.mastermind.moneytransferapp.model.Transaction;
-import com.mastermind.moneytransferapp.model.User;
 import com.mastermind.moneytransferapp.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

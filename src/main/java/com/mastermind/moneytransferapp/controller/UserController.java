@@ -6,6 +6,7 @@ import com.mastermind.moneytransferapp.model.User;
 import com.mastermind.moneytransferapp.repository.TransactionRepository;
 import com.mastermind.moneytransferapp.repository.UserRepository;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,7 @@ public class UserController {
         return modelAndView;
     }
 
+    @ApiOperation(value = "find user by id")
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> findOne(@PathVariable Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
@@ -116,6 +118,7 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "find transactions by user id")
     @GetMapping(value = "/{id}/transactions/")
     public ResponseEntity<Iterable<Transaction>> findTransactionsByUserId(@PathVariable Long id) {
         Iterable<Transaction> transactions = transactionRepository.findByUserId(id);
